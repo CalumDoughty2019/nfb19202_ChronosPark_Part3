@@ -74,6 +74,7 @@ public class Menu {
                     //Recommendations reco = new Recommendations();
                     //reco.getCollatedRides();
                     Chronos.personalisedPath(collatedRides);
+                    System.out.println("testing");
                     break;
                 case "menu":
                     validInput = true;
