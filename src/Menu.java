@@ -34,9 +34,6 @@ public class Menu {
 
         System.out.println();
         System.out.println("Choose an option:");
-
-        System.out.println("Adding this temporarily");
-
         System.out.println("   1. Get recommendations for a single ride");
         System.out.println("   2. Get recommendations for the entire park");
         System.out.println("   3. Generate a map of the park");
