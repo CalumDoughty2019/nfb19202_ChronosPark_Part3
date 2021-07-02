@@ -67,6 +67,22 @@ public class EdgeListGraph {
         }
     }
 
+
+    public void getEdge(Vertex source, Vertex target) {
+        Edge temp = null;
+        for (Edge e : edges) {
+            if (e.source() == source && e.target() == target) {
+                temp = e;
+                break;
+            }
+        }
+        if (temp != null) {
+            edges.remove(temp);
+        }
+    }
+
+
+
     public static List<Vertex> topologicalSort(EdgeListGraph g) {
         EdgeListGraph h = g.makeCopy();       // we remove edges so want a copy
         List<Vertex> vs = new LinkedList<>(); // sorted vertices we return
@@ -122,7 +138,7 @@ public class EdgeListGraph {
         return minIndex;         // return the smallest index found
     }
 
-    private void printSolution(int[] dis, Vertex source, ArrayList<Ride> ridesArray) {
+    public void printSolution(int[] dis, Vertex source, ArrayList<Ride> ridesArray) {
         System.out.println("Vertex distance from source " + source);
         System.out.println("          Ride Name:        Distance from Park Entrance:");
         System.out.println("          ----------        ----------------------------");
@@ -177,6 +193,135 @@ public class EdgeListGraph {
         System.out.println();
     }
 
+
+    public void printPersonalisedSolution(int[] dis, Vertex source, ArrayList<Ride> ridesArray, ArrayList<Ride> collatedRides) {
+        System.out.println("Vertex distance from source " + source);
+        System.out.println("          Ride Name:        Distance from Park Entrance:");
+        System.out.println("          ----------        ----------------------------");
+
+
+
+        int lastTheme = 0;
+        for (int i = 0; i < collatedRides.size(); i++) {
+
+            if(collatedRides.get(i).getName() != "Entrance"){
+
+                //if(ridesArray.get(i-1) == vertices)
+
+
+                if(collatedRides.get(i).getTheme() != lastTheme){
+                    switch(collatedRides.get(i).getTheme()){
+                        case 1:
+                            System.out.println("--------");
+                            System.out.println("Medieval");
+                            System.out.println("--------");
+                            break;
+                        case 2:
+                            System.out.println("----------");
+                            System.out.println("Futuristic");
+                            System.out.println("----------");
+                            break;
+                        case 3:
+                            System.out.println("--------");
+                            System.out.println("Jurassic");
+                            System.out.println("--------");
+                            break;
+                        case 4:
+                            System.out.println("----------");
+                            System.out.println("Industrial");
+                            System.out.println("----------");
+                            break;
+                    }
+                }
+                lastTheme = collatedRides.get(i).getTheme();
+
+
+//                if(ridesArray.get(i-1).getName() == vertices.get(i).name()){
+//                    System.out.println(ridesArray.get(i-1).getTheme());
+//                }
+                int k = 0;
+                //for(int n = 0; n < collatedRides.size(); n++){
+                    for(int m = 0; m < ridesArray.size(); m++){
+                        if(collatedRides.get(i).getName() == ridesArray.get(m).getName()){
+                            k = m;
+                        }
+                    }
+               // }
+
+                System.out.printf("%20s %10sm %n", collatedRides.get(i).getName(), dis[k]);
+            }
+
+            //System.out.println(i + " tt " + dis[i]);
+            //System.out.println(vertices.get(i).name() + "              " + dis[i]);
+        }
+        System.out.println();
+    }
+
+
+    public void printRecommendedSolution(int[] dis, Vertex source, ArrayList<Ride> ridesArray, ArrayList<Ride> collatedRides) {
+        System.out.println("Vertex distance from source " + source);
+        System.out.println("          Ride Name:        Distance from Park Entrance:    Wait time at next ride:");
+        System.out.println("          ----------        ----------------------------    -----------------------");
+
+
+
+        int lastTheme = 0;
+        for (int i = 0; i < collatedRides.size(); i++) {
+
+            if(collatedRides.get(i).getName() != "Entrance"){
+
+                //if(ridesArray.get(i-1) == vertices)
+
+
+                if(collatedRides.get(i).getTheme() != lastTheme){
+                    switch(collatedRides.get(i).getTheme()){
+                        case 1:
+                            System.out.println("--------");
+                            System.out.println("Medieval");
+                            System.out.println("--------");
+                            break;
+                        case 2:
+                            System.out.println("----------");
+                            System.out.println("Futuristic");
+                            System.out.println("----------");
+                            break;
+                        case 3:
+                            System.out.println("--------");
+                            System.out.println("Jurassic");
+                            System.out.println("--------");
+                            break;
+                        case 4:
+                            System.out.println("----------");
+                            System.out.println("Industrial");
+                            System.out.println("----------");
+                            break;
+                    }
+                }
+                lastTheme = collatedRides.get(i).getTheme();
+
+
+//                if(ridesArray.get(i-1).getName() == vertices.get(i).name()){
+//                    System.out.println(ridesArray.get(i-1).getTheme());
+//                }
+                int k = 0;
+                //for(int n = 0; n < collatedRides.size(); n++){
+                for(int m = 0; m < ridesArray.size(); m++){
+                    if(collatedRides.get(i).getName() == ridesArray.get(m).getName()){
+                        k = m;
+                    }
+                }
+                // }
+
+                System.out.printf("%20s %10sm %30s minutes %n", collatedRides.get(i).getName(), dis[k], collatedRides.get(i).getWeight());
+            }
+
+            //System.out.println(i + " tt " + dis[i]);
+            //System.out.println(vertices.get(i).name() + "              " + dis[i]);
+        }
+        System.out.println();
+    }
+
+
     public void dijkstra(Vertex source, ArrayList<Ride> ridesArray) {
         int[] dist = new int[vertices.size()];
 
@@ -213,6 +358,84 @@ public class EdgeListGraph {
 
         printSolution(dist, source, ridesArray);
     }
+
+
+
+    public void personalised(Vertex source, ArrayList<Ride> ridesArray, ArrayList<Ride> collatedRides) {
+        int[] dist = new int[vertices.size()];
+
+        boolean[] done = new boolean[vertices.size()]; // nodes that have their final distance value calculated
+
+        // initialise all distances to MAX_VALUE
+        // and all final values to false
+        for (int i = 0; i < vertices.size(); i++) {
+            if (vertices.get(i) == source) {
+                dist[i] = 0;
+            } else {
+                dist[i] = Integer.MAX_VALUE;
+            }
+            done[i] = false;
+        }
+
+        for (int i = 0; i < vertices.size(); i++) {
+            int u = minDistance(dist, done); // find the next smallest node distance
+            done[u] = true;                  // and set that node's index to be done
+
+            // this loop might repeatedly update the distance to a node
+            // as long as its index isn't done
+            for (int v = 0; v < vertices.size(); v++) { // for all vertices, v, in the graph
+                Vertex a = vertices.get(u);
+                Vertex b = vertices.get(v);
+                Edge e = hasEdge(a, b);                // if there is an edge from u to v
+                if (!done[v] &&                        // and v isn't done
+                        e != null && e.weight() != 0 &&
+                        dist[u] + e.weight() < dist[v]) {  // and the distance from u to v is less than what's currently known about v
+                    dist[v] = dist[u] + e.weight();  // update the distance to v.
+                }
+            }
+        }
+
+        printPersonalisedSolution(dist, source, ridesArray, collatedRides);
+    }
+
+    public void recommended(Vertex source, ArrayList<Ride> ridesArray, ArrayList<Ride> collatedRides) {
+        int[] dist = new int[vertices.size()];
+
+        boolean[] done = new boolean[vertices.size()]; // nodes that have their final distance value calculated
+
+        // initialise all distances to MAX_VALUE
+        // and all final values to false
+        for (int i = 0; i < vertices.size(); i++) {
+            if (vertices.get(i) == source) {
+                dist[i] = 0;
+            } else {
+                dist[i] = Integer.MAX_VALUE;
+            }
+            done[i] = false;
+        }
+
+        for (int i = 0; i < vertices.size(); i++) {
+            int u = minDistance(dist, done); // find the next smallest node distance
+            done[u] = true;                  // and set that node's index to be done
+
+            // this loop might repeatedly update the distance to a node
+            // as long as its index isn't done
+            for (int v = 0; v < vertices.size(); v++) { // for all vertices, v, in the graph
+                Vertex a = vertices.get(u);
+                Vertex b = vertices.get(v);
+                Edge e = hasEdge(a, b);                // if there is an edge from u to v
+                if (!done[v] &&                        // and v isn't done
+                        e != null && e.weight() != 0 &&
+                        dist[u] + e.weight() < dist[v]) {  // and the distance from u to v is less than what's currently known about v
+                    dist[v] = dist[u] + e.weight();  // update the distance to v.
+                }
+            }
+        }
+
+        printRecommendedSolution(dist, source, ridesArray, collatedRides);
+    }
+
+
 
     public void bellmanFordPath(Vertex source) {
         int[] dist = new int[vertices.size()];

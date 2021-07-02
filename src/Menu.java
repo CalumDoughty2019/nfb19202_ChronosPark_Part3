@@ -38,6 +38,7 @@ public class Menu {
         System.out.println("   2. Get recommendations for the entire park");
         System.out.println("   3. Generate a map of the park");
         System.out.println("   4. Generate a personalised map");
+        System.out.println("   5. Recommend a route around the park");
         System.out.println("   quit  -This can be typed at any options screen to exit the program");
         System.out.println("   menu  -This can be typed at any options screen to come back to menu");
         System.out.println();
@@ -73,8 +74,13 @@ public class Menu {
                     validInput = true;
                     //Recommendations reco = new Recommendations();
                     //reco.getCollatedRides();
-                    Chronos.personalisedPath(collatedRides);
-                    System.out.println("testing");
+                    Chronos.personalisedPath(ridesArray, collatedRides);
+                    CLI();
+                    //System.out.println("testing");
+                    break;
+                case "5":
+                    Chronos.recommendedPath(ridesArray, collatedRides);
+                    CLI();
                     break;
                 case "menu":
                     validInput = true;

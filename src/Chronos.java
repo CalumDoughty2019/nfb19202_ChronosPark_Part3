@@ -1,6 +1,8 @@
+import Part3.Edge;
 import Part3.Vertex;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Chronos {
     static Vertex entrance = new Vertex(0, "Entrance");
@@ -70,19 +72,26 @@ public class Chronos {
         g.addEdge(RexRampage, HighNoon, 80);
     }
 
+    private int find(int[] parent, int source) {
+        if(parent[source] != source){
+            return find(parent, parent[source]);
+        }
+        return source;
+    }
+
+
 
     public static void dijkstraPath(ArrayList<Ride> ridesArray) {
         EdgeListGraph g = new EdgeListGraph(false);
         generatePath(g);
 
-        System.out.println("Dijkstra's Algorithm");
         g.dijkstra(entrance, ridesArray);
         //System.out.println();
         Menu menu = new Menu();
         menu.pressEnterToContinue();
     }
 
-    public static void personalisedPath(ArrayList<Ride> collatedRides){
+    public static void personalisedPath(ArrayList<Ride> ridesArray, ArrayList<Ride> collatedRides){
         if(collatedRides.isEmpty()){
             System.out.println("**** No personalised ride list currently exists. Please see step 2 in menu ****");
             System.out.println();
@@ -90,11 +99,27 @@ public class Chronos {
             EdgeListGraph g = new EdgeListGraph(false);
             generatePath(g);
 
-            System.out.println("Dijkstra's Algorithm");
-            g.dijkstra(entrance, collatedRides);
+            g.personalised(entrance, ridesArray, collatedRides);
+            //System.out.println();
         }
         //System.out.println();
-        Menu menu = new Menu();
-        menu.pressEnterToContinue();
+//        Menu menu = new Menu();
+//        menu.pressEnterToContinue();
+    }
+
+    public static void recommendedPath(ArrayList<Ride> ridesArray, ArrayList<Ride> collatedRides){
+        if(collatedRides.isEmpty()){
+            System.out.println("**** No personalised ride list currently exists. Please see step 2 in menu ****");
+            System.out.println();
+        }else{
+            EdgeListGraph g = new EdgeListGraph(false);
+            generatePath(g);
+
+            g.recommended(entrance, ridesArray, collatedRides);
+            //System.out.println();
+        }
+        //System.out.println();
+//        Menu menu = new Menu();
+//        menu.pressEnterToContinue();
     }
 }

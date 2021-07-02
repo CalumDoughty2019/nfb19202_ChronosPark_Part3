@@ -26,7 +26,7 @@ class RideTest {
     @Test
     void rideCreateTest(){
         //Ride(String name, int typeOfHeight, int anotherTypeOfHeight, double heightMax, double heightMin, boolean wheelchair, int groupMax, int groupMin, int theme, boolean adrenaline, boolean horror, boolean kids, boolean water)
-        Ride ride = new Ride(8, "Tester", 1, 0, 0, 0, true, 0, 0, 1, false, true, false, true);
+        Ride ride = new Ride(8, "Tester", 1, 0, 0, 0, true, 0, 0, 1, false, true, false, true, 5);
 
         assertEquals(ride.getHeightMin(), 0);
 

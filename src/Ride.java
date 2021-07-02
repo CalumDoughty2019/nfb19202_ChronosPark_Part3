@@ -27,6 +27,7 @@ public class Ride {
     private boolean horror;
     private boolean kids;
     private boolean water;
+    private int weight;
 
     //constructors
     //default constructor
@@ -45,11 +46,12 @@ public class Ride {
         horror = true;
         kids = true;
         water = true;
+        weight = 0;
     }
 
     //full constructor
     public Ride(int rideId, String name, int typeOfHeight, int anotherTypeOfHeight, double heightMax, double heightMin, boolean wheelchair, int groupMax, int groupMin, int theme, boolean adrenaline,
-                     boolean horror, boolean kids, boolean water){
+                     boolean horror, boolean kids, boolean water, int weight){
         this.rideId = rideId;
         this.name = name;
         this.typeOfHeight = typeOfHeight;
@@ -64,6 +66,7 @@ public class Ride {
         this.horror = horror;
         this.kids = kids;
         this.water = water;
+        this.weight = weight;
     }
 
 
@@ -178,5 +181,13 @@ public class Ride {
 
     public void setWater(boolean water) {
         this.water = water;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 }
