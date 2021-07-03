@@ -89,6 +89,7 @@ public class Menu {
                 case "quit":
                     validInput = true;
                     System.out.println("Goodbye");
+                    System.exit(0);
                     break;
                 default:
                     System.out.println("Please select one of the options above");
